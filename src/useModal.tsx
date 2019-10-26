@@ -38,7 +38,7 @@ export const useModal = ({ onOpen, onClose, background, ...config }: UseModalArg
 
   const modal = useRef() as MutableRefObject<HTMLDivElement>
 
-  const { isOpen, togglePortal, openPortal, closePortal, Portal } = usePortal({
+  const { isOpen, togglePortal, openPortal, closePortal, Portal, ...rest } = usePortal({
     onOpen(event) {
       const { portal } = event;
       // eslint-disable-next-line no-param-reassign
@@ -77,7 +77,8 @@ export const useModal = ({ onOpen, onClose, background, ...config }: UseModalArg
     toggleModal: togglePortal,
     openModal: openPortal,
     closeModal: closePortal,
-    isOpen
+    isOpen,
+    ...rest,
   });
 };
 
