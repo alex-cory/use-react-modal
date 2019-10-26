@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useContext } from 'react'
+import React, { useRef, useCallback, useContext, MutableRefObject } from 'react'
 import UseModalContext from './UseModalContext'
 import usePortal from 'react-useportal'
 import { parseCSSText } from './utils'
@@ -17,6 +17,7 @@ const defaults = {
 
 export const useModal = ({ onOpen, onClose, background, ...config }: UseModalArgs = defaults) => {
   const context = useContext(UseModalContext)
+  const backdrop = background || context.background
   const modalStyle = `
     position: fixed;
     left: 50%;
@@ -27,7 +28,7 @@ export const useModal = ({ onOpen, onClose, background, ...config }: UseModalArg
 
   const backgroundStyle = `
     position: absolute;
-    background: ${background || context.background || 'transparent'};
+    background: ${backdrop || 'transparent'};
     width: 100vw;
     height: 100vh;
     top: 0;
@@ -35,13 +36,13 @@ export const useModal = ({ onOpen, onClose, background, ...config }: UseModalArg
     z-index: 1000;
   `;
 
-  const modal = useRef();
+  const modal = useRef() as MutableRefObject<HTMLDivElement>
 
   const { isOpen, togglePortal, openPortal, closePortal, Portal } = usePortal({
     onOpen(event) {
       const { portal } = event;
       // eslint-disable-next-line no-param-reassign
-      portal.current.style.cssText = background ? backgroundStyle : modalStyle;
+      portal.current.style.cssText = backdrop ? backgroundStyle : modalStyle;
       if (onOpen) onOpen(event);
     },
     onClose(event) {
@@ -52,7 +53,7 @@ export const useModal = ({ onOpen, onClose, background, ...config }: UseModalArg
     },
     onPortalClick({ target }) {
       const clickingOutsideModal =
-        modal && modal.current && !(modal.current as HTMLElement).contains(target as Node);
+        modal && modal.current && !modal.current.contains(target as Node);
       if (clickingOutsideModal) closePortal();
     },
     ...config
@@ -69,7 +70,7 @@ export const useModal = ({ onOpen, onClose, background, ...config }: UseModalArg
     [modalStyle]
   );
 
-  const Modal = background ? ModalWithBackground : Portal;
+  const Modal = backdrop ? ModalWithBackground : Portal;
 
   return Object.assign([openPortal, closePortal, isOpen, Modal, togglePortal], {
     Modal,

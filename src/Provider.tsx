@@ -8,7 +8,7 @@ export const Provider = ({
 }: any): ReactElement => {
   const defaults = useMemo(
     (): any => ({
-      background: '',
+      background: background || '',
     }),
     [background],
   )
