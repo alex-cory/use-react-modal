@@ -113,48 +113,6 @@ const App = () => (
 )
 ```
 
-### Customizing the Portal directly
-By using `onOpen`, `onClose` or any other event handler, you can modify the `Portal` and return it. See [useDropdown](https://codesandbox.io/s/useportal-usedropdown-587fo) for a working example. It's important that you pass the `event` object to `openPortal` and `togglePortal` otherwise you will need to attach a `ref` to the clicked element.
-
-```jsx
-import useModal from 'use-react-modal'
-
-const useModal = () => {
-  const { isOpen, togglePortal, closePortal, Portal } = usePortal({
-    onOpen({ portal }) {
-      portal.current.style.cssText = `
-        /* add your css here for the Portal */
-        position: fixed;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%,-50%);
-        z-index: 1000;
-      `
-    }
-  })
-
-  return {
-    Modal: Portal,
-    toggleModal: togglePortal,
-    closeModal: closePortal,
-    isOpen
-  }
-}
-
-const App = () => {
-  const { openModal, closeModal, isOpen, Modal } = useModal()
-  
-  return <>
-    <button onClick={e => openModal(e)}>Open Modal<button>
-    {isOpen && (
-      <Modal>
-        This will dynamically center to the middle of the screen regardless of the size of what you put in here
-      </Modal>
-    )}
-  </>
-}
-```
-
 **Make sure you are passing the html synthetic event to the `openModal` and `toggleModal` . i.e. `onClick={e => openModal(e)}`**
 
 ### Usage with a `ref`
