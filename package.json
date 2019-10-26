@@ -73,6 +73,18 @@
     "react-useportal",
     "react-use-portal",
     "transportation",
-    "react portal hook"
+    "react portal hook",
+    "use-modal",
+    "react-use-modal",
+    "modal",
+    "modal hook",
+    "react-modal-hook",
+    "dialog",
+    "lightbox",
+    "react-lightbox",
+    "lightbox hook",
+    "react-dialog-hook",
+    "use-dialog",
+    "use-lightbox"
   ]
 }
