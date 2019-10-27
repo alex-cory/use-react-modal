@@ -24,7 +24,7 @@ export const useModal = ({ onOpen, onClose, background, ...config }: UseModalArg
     top: 50%;
     transform: translate(-50%,-50%);
     z-index: 1000;
-  `;
+  `
 
   const backgroundStyle = `
     position: absolute;
@@ -34,30 +34,30 @@ export const useModal = ({ onOpen, onClose, background, ...config }: UseModalArg
     top: 0;
     left: 0;
     z-index: 1000;
-  `;
+  `
 
   const modal = useRef() as MutableRefObject<HTMLDivElement>
 
   const { isOpen, togglePortal, openPortal, closePortal, Portal, ...rest } = usePortal({
     onOpen(event) {
-      const { portal } = event;
+      const { portal } = event
       // eslint-disable-next-line no-param-reassign
-      portal.current.style.cssText = backdrop ? backgroundStyle : modalStyle;
-      if (onOpen) onOpen(event);
+      portal.current.style.cssText = backdrop ? backgroundStyle : modalStyle
+      if (onOpen) onOpen(event)
     },
     onClose(event) {
-      const { portal } = event;
+      const { portal } = event
       // eslint-disable-next-line no-param-reassign
-      portal.current.removeAttribute('style');
-      if (onClose) onClose(event);
+      portal.current.removeAttribute('style')
+      if (onClose) onClose(event)
     },
     onPortalClick({ target }) {
       const clickingOutsideModal =
-        modal && modal.current && !modal.current.contains(target as Node);
-      if (clickingOutsideModal) closePortal();
+        modal && modal.current && !modal.current.contains(target as Node)
+      if (clickingOutsideModal) closePortal()
     },
     ...config
-  });
+  })
 
   const ModalWithBackground = useCallback(
     ({ children }) => (
@@ -68,9 +68,9 @@ export const useModal = ({ onOpen, onClose, background, ...config }: UseModalArg
       </Portal>
     ),
     [modalStyle]
-  );
+  )
 
-  const Modal = backdrop ? ModalWithBackground : Portal;
+  const Modal = backdrop ? ModalWithBackground : Portal
 
   return Object.assign([openPortal, closePortal, isOpen, Modal, togglePortal], {
     Modal,
@@ -79,7 +79,7 @@ export const useModal = ({ onOpen, onClose, background, ...config }: UseModalArg
     closeModal: closePortal,
     isOpen,
     ...rest,
-  });
-};
+  })
+}
 
-export default useModal;
+export default useModal
