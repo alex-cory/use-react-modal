@@ -90,11 +90,12 @@ const App = () => {
 ```jsx 
 import useModal, { Provider } from 'use-react-modal'
 
-const App = () => {
-  const { isOpen, openModal, closeModal, Modal } = useModal()
+const MyComponent = () => {
+  const { isOpen, openModal, Modal } = useModal()
 
   return (
     <>
+      <button onClick={openModal}>Open Me!</button>
       {isOpen && (
         <Modal>
           Now, whatever you put here will be centered AND have a backdrop
@@ -108,7 +109,7 @@ const App = () => {
 
 const App = () => (
   <Provider background='rgba(0, 0, 0, 0.5)'>
-    This text is portaled into San Francisco!
+    <MyComponent />
   </Portal>
 )
 ```
