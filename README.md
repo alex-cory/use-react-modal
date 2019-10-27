@@ -88,7 +88,7 @@ const App = () => {
 
 ### With Provider
 ```jsx 
-import useModal from 'use-react-modal'
+import useModal, { Provider } from 'use-react-modal'
 
 const App = () => {
   const { isOpen, openModal, closeModal, Modal } = useModal()
