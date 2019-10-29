@@ -173,7 +173,9 @@ const {
   // this allows you to interact directly with the modal
   modalRef,
 } = useModal({
-  background: 'rgba(0, 0, 0, 0.5)', // sets the color of the backdrop, if nothing is set, there will be no backdrop
+  // sets the color of the backdrop, if nothing is set, the backdrop will be transparent unless it's set in the Provider
+  // setting to `null` removes any background set in the `Provider`
+  background: 'rgba(0, 0, 0, 0.5)',
   closeOnOutsideClick: true,
   closeOnEsc: true,
   bindTo, // attach the portal to this node in the DOM
