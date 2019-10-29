@@ -165,7 +165,13 @@ const {
   toggleModal,
   isOpen,
   Modal,
-  ref, // if you don't pass an event to openModal, closeModal, or toggleModal, you will need to put this on the element you want to interact with/click
+  // if you don't pass an event to openModal, closeModal, or toggleModal, you will need to
+  // put this on the element you want to interact with/click
+  targetRef,
+  // this allows you to interact directly with the backdrop/overlay
+  backdropRef,
+  // this allows you to interact directly with the modal
+  modalRef,
 } = useModal({
   background: 'rgba(0, 0, 0, 0.5)', // sets the color of the backdrop, if nothing is set, there will be no backdrop
   closeOnOutsideClick: true,
