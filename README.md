@@ -117,17 +117,17 @@ const App = () => (
 **Make sure you are passing the html synthetic event to the `openModal` and `toggleModal` . i.e. `onClick={e => openModal(e)}`**
 
 ### Usage with a `ref`
-If for some reason, you don't want to pass around the `event` to `openModal` or `toggleModal`, you can use a `ref` like this.
+If for some reason, you don't want to pass around the `event` to `openModal` or `toggleModal`, you can use a `targetRef` like this.
 ```jsx
 import useModal from 'use-react-modal'
 
 const App = () => {
-  const { ref, openModal, closeModal, isOpen, Modal } = useModal()
+  const { targetRef, openModal, closeModal, isOpen, Modal } = useModal()
 
   return (
     <>
       {/* see below how I don't have to pass the event if I use the ref */}
-      <button ref={ref} onClick={() => openModal()}>
+      <button ref={targetRef} onClick={() => openModal()}>
         Open Modal
       </button>
       {isOpen && (
