@@ -33,7 +33,7 @@ export const useModal = ({ onOpen, onClose, background, ...config }: UseModalArg
 
   const modal = useRef() as MutableRefObject<HTMLDivElement>
 
-  const { isOpen, togglePortal, openPortal, closePortal, Portal: Backdrop, ref } = usePortal({
+  const { isOpen, togglePortal, openPortal, closePortal, Portal: Backdrop, ref, portalRef } = usePortal({
     onOpen(event) {
       if (isServer) return
       disableBodyScroll(document.body)
@@ -74,13 +74,14 @@ export const useModal = ({ onOpen, onClose, background, ...config }: UseModalArg
 
   // you cannot spread in this because it will give different values for ModalWithBackdrop
   // when doing array vs object destructuring
-  return Object.assign([openPortal, closePortal, isOpen, ModalWithBackdrop, togglePortal, modal, ref], {
+  return Object.assign([openPortal, closePortal, isOpen, ModalWithBackdrop, togglePortal, ref, portalRef, modal], {
     Modal: ModalWithBackdrop,
     toggleModal: togglePortal,
     openModal: openPortal,
     closeModal: closePortal,
     isOpen,
-    backdropRef: ref,
+    targetRef: ref,
+    backdropRef: portalRef,
     modalRef: modal,
   })
 }
