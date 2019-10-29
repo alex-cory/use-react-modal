@@ -166,7 +166,7 @@ const {
   isOpen,
   Modal,
   // if you don't pass an event to openModal, closeModal, or toggleModal, you will need to
-  // put this on the element you want to interact with/click
+  // put this on the element you want to interact with/click to open the modal
   targetRef,
   // this allows you to interact directly with the backdrop/overlay
   backdropRef,
