@@ -192,6 +192,11 @@ const {
   onClick({ targetEl, event, portal }) {}
 })
 ```
+Can also do array destructuring
+```js
+const [openModal, closeModal, isOpen, Modal, toggleModal, targetRef, portalRef, modalRef] = useModal()
+```
+
 Todos
 ------
 - [ ] animations 😜
