@@ -1,7 +1,9 @@
 import React, { useRef, useCallback, useContext, MutableRefObject } from 'react'
 import UseModalContext from './UseModalContext'
 import usePortal from 'react-useportal'
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock'
 import { parseCSSText } from './utils'
+import useSSR from 'use-ssr'
 
 type UseModalArgs = {
  onOpen: any,
@@ -15,70 +17,71 @@ const defaults = {
   background: ''
 }
 
-export const useModal = ({ onOpen, onClose, background, ...config }: UseModalArgs = defaults) => {
-  const context = useContext(UseModalContext)
-  const backdrop = background || context.background
-  const modalStyle = `
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%,-50%);
-    z-index: 1000;
-  `
+const modalStyles = `
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  z-index: 1000;
+`
 
-  const backgroundStyle = `
-    position: absolute;
-    background: ${backdrop || 'transparent'};
-    width: 100vw;
-    height: 100vh;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-  `
+
+export const useModal = ({ onOpen, onClose, background, ...config }: UseModalArgs = defaults) => {
+  const { isServer } = useSSR()
+  const context = useContext(UseModalContext)
+  const bg = background === null ? '' : background || context.background
 
   const modal = useRef() as MutableRefObject<HTMLDivElement>
 
-  const { isOpen, togglePortal, openPortal, closePortal, Portal, ...rest } = usePortal({
+  const { isOpen, togglePortal, openPortal, closePortal, Portal: Backdrop, ref } = usePortal({
     onOpen(event) {
-      const { portal } = event
+      if (isServer) return
+      disableBodyScroll(document.body)
+ 
       // eslint-disable-next-line no-param-reassign
-      portal.current.style.cssText = backdrop ? backgroundStyle : modalStyle
+      event.portal.current.style.cssText = `
+        position: absolute;
+        background: ${bg ? bg : 'transparent'};
+        width: 100vw;
+        height: 100vh;
+        top: ${window.scrollY}px;
+        left: 0;
+        z-index: 1000;
+      `
+
       if (onOpen) onOpen(event)
     },
     onClose(event) {
-      const { portal } = event
+      if (isServer) return
+      enableBodyScroll(document.body)
+ 
       // eslint-disable-next-line no-param-reassign
-      portal.current.removeAttribute('style')
+      event.portal.current.removeAttribute('style')
       if (onClose) onClose(event)
     },
     onPortalClick({ target }) {
-      const clickingOutsideModal =
-        modal && modal.current && !modal.current.contains(target as Node)
+      const clickingOutsideModal = modal && modal.current && !modal.current.contains(target as Node)
       if (clickingOutsideModal) closePortal()
     },
     ...config
   })
 
-  const ModalWithBackground = useCallback(
-    ({ children }) => (
-      <Portal>
-        <div ref={modal} style={parseCSSText(modalStyle)}>
-          {children}
-        </div>
-      </Portal>
-    ),
-    [modalStyle]
-  )
+  const ModalWithBackdrop = useCallback((props: any) => (
+    <Backdrop>
+      <div ref={modal} style={parseCSSText(modalStyles)} {...props} />
+    </Backdrop>
+  ), [modalStyles])
 
-  const Modal = backdrop ? ModalWithBackground : Portal
-
-  return Object.assign([openPortal, closePortal, isOpen, Modal, togglePortal], {
-    Modal,
+  // you cannot spread in this because it will give different values for ModalWithBackdrop
+  // when doing array vs object destructuring
+  return Object.assign([openPortal, closePortal, isOpen, ModalWithBackdrop, togglePortal, modal, ref], {
+    Modal: ModalWithBackdrop,
     toggleModal: togglePortal,
     openModal: openPortal,
     closeModal: closePortal,
     isOpen,
-    ...rest,
+    backdropRef: ref,
+    modalRef: modal,
   })
 }
 
