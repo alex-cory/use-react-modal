@@ -31,11 +31,13 @@
     "react-dom": "^16.8.6"
   },
   "dependencies": {
-    "react-useportal": "^1.0.11",
+    "body-scroll-lock": "^2.6.4",
+    "react-useportal": "^1.0.12",
     "use-ssr": "^1.0.19"
   },
   "devDependencies": {
     "@testing-library/react-hooks": "^3.0.0",
+    "@types/body-scroll-lock": "^2.6.1",
     "@types/jest": "^24.0.18",
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.8.4",
