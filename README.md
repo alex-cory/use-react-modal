@@ -48,7 +48,7 @@ Features
 --------
 - SSR (server side rendering) support
 - TypeScript support
-- 2 dependencies ([use-ssr](https://github.com/alex-cory/use-ssr), [react-useportal](https://github.com/alex-cory/use-ssr))
+- 2 dependencies ([use-ssr](https://github.com/alex-cory/use-ssr), [react-useportal](https://github.com/alex-cory/react-useportal))
 - Built in state
 
 ### Examples
