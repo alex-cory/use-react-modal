@@ -110,7 +110,7 @@ const MyComponent = () => {
 const App = () => (
   <Provider background='rgba(0, 0, 0, 0.5)'>
     <MyComponent />
-  </Portal>
+  </Provider>
 )
 ```
 
