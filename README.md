@@ -213,4 +213,17 @@ Todos
   // CustomModal, CustomCloseButton
   <Provider Modal={CustomModal} CloseButton={CustomClostButton} />
   const { Modal, CloseButton } = useProvider()
+  
+  // customize the modal animations
+  const { Modal } = useModal({
+    onOpen({ modal }) {
+      modal.current.style.cssText = `
+        /* do some animation in */
+      `
+    },
+    onClose({ modal }) {
+      modal.current.style.cssText = `
+        /* do some animation out */
+      `
+    }
   ```
