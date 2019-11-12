@@ -226,4 +226,21 @@ Todos
         /* do some animation out */
       `
     }
+  })
+  
+  // customize the modal animations idea 2
+  const { Modal } = useModal({
+    animateIn: `
+      /* css for animating in */
+    `,
+    animateOut: `
+      /* css for animating out */
+    `,
+  })
+  
+  // customize the modal animations idea 3
+  // maybe have some predefined options?
+  const { Modal } = useModal({
+    animate: 'fade-in-out', // 'slide-in-top', etc...
+  })
   ```
