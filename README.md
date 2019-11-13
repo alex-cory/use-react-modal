@@ -243,4 +243,6 @@ Todos
   const { Modal } = useModal({
     animate: 'fade-in-out', // 'slide-in-top', etc...
   })
+  
+  // check out http://reactcommunity.org/react-modal/styles/transitions.html
   ```
