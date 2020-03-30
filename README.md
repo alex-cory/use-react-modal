@@ -133,7 +133,7 @@ const App = () => {
       {isOpen && (
         <Modal>
           <p>
-            <button onClick={closePortal}>Close me!</button>, hit ESC or
+            <button onClick={closeModal}>Close me!</button>, hit ESC or
             Cool Modal 😜
           </p>
         </Modal>
